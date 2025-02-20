@@ -6,11 +6,9 @@ import {
   View,
   StyleSheet,
   Image,
-  Modal,
 } from 'react-native';
-
+import ModalDetail from '../../componentes/modals/modalDetail.tsx';
 import { getPopularMovies } from '../../utils/service/TMDBService';
-
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
   ICarouselInstance,
@@ -18,7 +16,6 @@ import Carousel, {
 } from 'react-native-reanimated-carousel';
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 const Home = () => {
   const [topImages, setTopImages] = useState<any>([]);
@@ -104,24 +101,10 @@ const Home = () => {
         containerStyle={{ gap: 5, marginTop: 20 }}
         onPress={onPressPagination}
       />
-      <Modal
-        visible={showDetailModal}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={closeDetailModal}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text>Aquí van los detalles...</Text>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={closeDetailModal}
-            >
-              <Text>Cerrar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <ModalDetail
+        showDetailModal={showDetailModal}
+        closeDetailModal={closeDetailModal}
+      />
     </View>
   );
 };
@@ -189,27 +172,6 @@ const styles = StyleSheet.create({
   imagePoster: {
       width: '100%',
       height: '100%',
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '100%',
-    height: height / 1.4,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: '#F2C94C',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
   },
 });
 
